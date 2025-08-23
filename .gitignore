@@ -1,0 +1,12 @@
+# Node
+node_modules/
+
+# Build outputs
+dist/
+
+# Tool caches
+.parcel-cache/
+
+# Misc
+.DS_Store
+.env*

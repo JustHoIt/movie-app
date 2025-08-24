@@ -45,7 +45,6 @@ function routeRender(routes) {
     routerView.innerHTML = ''
     routerView.append(new currentRoute.component().el)
 
-
     window.scrollTo(0, 0)
 }
 

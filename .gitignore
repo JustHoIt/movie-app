@@ -8,5 +8,6 @@ dist/
 .parcel-cache/
 
 # Misc
+.vscode
 .DS_Store
 .env*

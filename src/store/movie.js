@@ -1,8 +1,5 @@
 import { Store } from '../core/core'
 
-///.env 파일에 omdb api key 등록
-const API_KEY = process.env.API_KEY;
-
 const store = new Store({
     searchText: '',
     page: 1,
@@ -22,7 +19,13 @@ export const searchMovies = async page => {
         store.state.message = ''
     }
     try {
-        const res = await fetch(`https://omdbapi.com?apikey=${API_KEY}&s=${store.state.searchText}&page=${page}`)
+        const res = await fetch('/api/movie', {
+            method: 'POST',
+            body: JSON.stringify({
+                title: store.state.searchText,
+                page
+            })
+        })
         const { Search, totalResults, Response, Error } = await res.json()
         if (Response === 'True') {
             store.state.movies = [
@@ -42,9 +45,14 @@ export const searchMovies = async page => {
 
 export const getMovieDetails = async id => {
     try {
-        const res = await fetch(`https://omdbapi.com?apikey=${API_KEY}&i=${id}&plot=full`)
+        const res = await fetch('/api/movie', {
+            method: 'POST',
+            body: JSON.stringify({
+                id
+            })
+        })
         store.state.movie = await res.json()
-    }catch (error){
+    } catch (error) {
         console.log('getMovieDetails error: ', error)
     }
 }

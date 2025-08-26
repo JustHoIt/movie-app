@@ -1,14 +1,27 @@
 ///// Component /////
+interface ComponentPayload {
+    tagName?: string
+    props?: {
+        [key: string]: unknown
+    }
+    state?: {
+        [key: string]: unknown
+    }
+}
+
 export class Component {
-    constructor(payload = {}) {
+    public el
+    public props
+    public state
+    constructor(payload: ComponentPayload = {}) {
         const {
             tagName = 'div',
-            state = {},
-            props = {}
+            props = {},
+            state = {}
         } = payload
         this.el = document.createElement(tagName)
-        this.state = state
         this.props = props
+        this.state = state
         this.render()
     }
     render() {
@@ -16,10 +29,14 @@ export class Component {
     }
 }
 
-
-
 ///// Router /////
-function routeRender(routes) {
+interface Route {
+    path: string
+    component: typeof Component
+}
+type Routes = Route[]
+
+function routeRender(routes: Routes) {
     if (!location.hash) {
         history.replaceState(null, '', '/#/')
     }
@@ -32,23 +49,30 @@ function routeRender(routes) {
     // a=123&b=456
     // [ 'a=123', 'b=456' ]
     // { a: '123', b: '456' }
+    interface Query {
+        [key: string]: string
+    }
+
     const query = queryString
         .split('&')
         .reduce((acc, cur) => {
             const [key, value] = cur.split('=')
             acc[key] = value
             return acc
-        }, {})
+        }, {} as Query)
     history.replaceState(query, '')
 
     const currentRoute = routes.find(route => new RegExp(`${route.path}/?$`).test(hash))
-    routerView.innerHTML = ''
-    routerView.append(new currentRoute.component().el)
+
+    if (routerView) {
+        routerView.innerHTML = ''
+        currentRoute && routerView.append(new currentRoute.component().el)
+    }
 
     window.scrollTo(0, 0)
 }
 
-export function createRouter(routes) {
+export function createRouter(routes: Routes) {
     return function () {
         window.addEventListener('popstate', () => {
             routeRender(routes)
@@ -59,10 +83,18 @@ export function createRouter(routes) {
 }
 
 ///// Store //////
-export class Store {
-    constructor(state) {
-        this.state = {}
-        this.observers = {}
+interface StoreObservers {
+    [key: string]: SubscribeCallback[]
+}
+interface SubscribeCallback {
+    (arg: unknown): void
+}
+
+export class Store<S> {
+    public state = {} as S
+    private observers = {} as StoreObservers
+
+    constructor(state: S) {
         for (const key in state) {
             Object.defineProperty(this.state, key, {
                 get: () => state[key], // state['message']
@@ -76,7 +108,7 @@ export class Store {
         }
     }
 
-    subscribe(key, cb) {
+    subscribe(key: string, cb: SubscribeCallback) {
         // { message: [cb1, cb2, cb3, ...] }
         Array.isArray(this.observers[key])
             ? this.observers[key].push(cb)

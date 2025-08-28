@@ -62,7 +62,7 @@ export default class TheHeader extends Component {
                     </ul>
                 </nav>
                 <a href="#/about" class="user">
-                    <img src="https://github.com/JustHoIt/core/blob/main/pe.png" alt="User">
+                    <img src="https://github.com/JustHoIt/movie-app/blob/main/screenshoot/pe.png?raw=true" alt="User">
                 </a>
         `
     }

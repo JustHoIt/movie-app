@@ -12,13 +12,13 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/node-fetch": "^2.6.13",
     "dotenv": "^17.2.1",
     "parcel": "^2.15.4",
     "typescript": "^5.9.2",
     "vercel": "^46.0.2"
   },
   "dependencies": {
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^3.3.2",
+    "openai": "^5.16.0"
   }
 }

@@ -10,7 +10,7 @@ interface State {
 }
 
 export default new Store<State>({
-    photo: 'https://github.com/JustHoIt/core/blob/main/pe.png',
+    photo: 'https://github.com/JustHoIt/movie-app/blob/main/screenshoot/pe.png?raw=true',
     name: 'JustHoIt / ParkHoMin',
     email: 'phm3128@naver.com',
     blog: '',

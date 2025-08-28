@@ -306,7 +306,7 @@ footer a:hover {
 }
 
 .movie-list .the-loader {
-    margin: 30px auto;
+  margin: 30px auto;
 }
 
 /* components/MovieItem */
@@ -550,6 +550,16 @@ footer a:hover {
   color: rgba(255, 255, 255, .3);
 }
 
+.chatbot .chats li.assistant .movie-title {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.chatbot .chats li.assistant .movie-title:hover {
+  text-decoration: underline;
+}
+
+
 .chatbot .chats li.assistant .the-loader {
   width: 13px;
   height: 13px;
@@ -595,4 +605,12 @@ footer a:hover {
 
 .chatbot .chat-starter .icon--close {
   display: none;
+}
+
+.chatbot.chatbot--on .chat-starter .icon--open {
+  display: none;
+}
+
+.chatbot.chatbot--on .chat-starter .icon--close {
+  display: block;
 }
